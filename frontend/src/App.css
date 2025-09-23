@@ -1,0 +1,29 @@
+.navbar-options {
+  background-color:deepskyblue;
+  width: 100%;
+  height: 41px;
+  display: flex;
+  position: fixed;
+  margin-top: 0px;
+  align-items: center;
+}
+
+.navbar-options li {
+  list-style: none;
+  font-weight: 600;
+}
+
+.navbar-link {
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 10px 15px 10px 15px;
+  /* the :hover selector relies on each Link's padding */
+  /* I modified the padding on top/bottom to match the navbar size */
+  /* This means technically the text is slightly off-center (by 1px) */
+}
+
+.navbar-options li:hover {
+  background-color: blue;
+}
