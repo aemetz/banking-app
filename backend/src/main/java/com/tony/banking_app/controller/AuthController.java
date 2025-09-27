@@ -1,0 +1,48 @@
+package com.tony.banking_app.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.tony.banking_app.dto.AuthRequest;
+import com.tony.banking_app.dto.RegisterDTO;
+import com.tony.banking_app.service.AuthService;
+
+@RestController
+@RequestMapping("/api/auth")
+public class AuthController {
+    
+    private final AuthenticationManager authenticationManager;
+    private final AuthService authService;
+
+    @Autowired
+    public AuthController(AuthenticationManager authenticationManager, AuthService authService) {
+        this.authenticationManager = authenticationManager;
+        this.authService = authService;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody RegisterDTO dto) {
+        authService.register(dto);
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body("User registered successfully");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> authenticate(@RequestBody AuthRequest authRequest) {
+        System.out.println("GETTING TOKEN!");
+        String token = authService.authenticate(authRequest).getToken();
+        System.out.println("GOT TOKEN!");
+        System.out.println(token);
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(token);
+    }
+
+}
