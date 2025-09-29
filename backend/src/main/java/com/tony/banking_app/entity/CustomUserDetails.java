@@ -18,10 +18,17 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(User user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
-        if (user.getRole() == UserRole.CUSTOMER) {
-            this.authorities = Arrays.asList(new SimpleGrantedAuthority(UserRole.CUSTOMER.toString()));
-        } else { // ADMIN
-            this.authorities = Arrays.asList(new SimpleGrantedAuthority(UserRole.ADMIN.toString()));
+
+        switch (user.getRole()) {
+            case UserRole.CUSTOMER:
+                this.authorities = Arrays.asList(new SimpleGrantedAuthority(UserRole.CUSTOMER.toString()));
+                break;
+            case UserRole.ADMIN:
+                this.authorities = Arrays.asList(new SimpleGrantedAuthority(UserRole.ADMIN.toString()));
+                break;
+            default:
+                System.out.println("Role not recognized by UserDetails");
+                this.authorities = Arrays.asList();
         }
     }
 

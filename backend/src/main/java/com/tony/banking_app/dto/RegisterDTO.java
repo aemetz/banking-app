@@ -1,20 +1,22 @@
 package com.tony.banking_app.dto;
 
 import com.tony.banking_app.entity.enums.UserRole;
+import com.tony.banking_app.exception.RoleNotFoundException;
 
 public class RegisterDTO {
     private String username;
     private String password;
     private UserRole role;
-    // private String role;
 
     public RegisterDTO(String username, String password, String role) {
         this.username = username;
         this.password = password;
         if (role.contains("CUSTOMER")) {
             this.role = UserRole.CUSTOMER;
-        } else { // ADMIN
+        } else if (role.contains("ADMIN")) {
             this.role = UserRole.ADMIN;
+        } else {
+            throw new RoleNotFoundException("Role not provided or does not exist in RegisterDTO");
         }
     }
 
@@ -31,13 +33,6 @@ public class RegisterDTO {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    // public String getRole() {
-    //     return this.role;
-    // }
-    // public void setRole(String role) {
-    //     this.role = role;
-    // }
 
     public UserRole getRole() {
         return this.role;

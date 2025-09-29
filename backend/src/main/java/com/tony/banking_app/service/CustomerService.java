@@ -6,12 +6,12 @@ import org.springframework.stereotype.Service;
 import com.tony.banking_app.repository.UserRepository;
 
 @Service
-public class UserService {
+public class CustomerService {
 
     private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public CustomerService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
     
