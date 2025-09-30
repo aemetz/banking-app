@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tony.banking_app.dto.AuthRequest;
+import com.tony.banking_app.dto.AuthResponse;
 import com.tony.banking_app.dto.RegisterDTO;
 import com.tony.banking_app.service.AuthService;
 
@@ -24,19 +25,19 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterDTO dto) {
-        authService.register(dto);
+    public ResponseEntity<AuthResponse> register(@RequestBody RegisterDTO dto) {
+        AuthResponse response = authService.register(dto);
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body("User registered successfully");
+            .body(response);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> authenticate(@RequestBody AuthRequest authRequest) {
-        String token = authService.authenticate(authRequest).getToken();
+    public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthRequest authRequest) {
+        AuthResponse response = authService.authenticate(authRequest);
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(token);
+            .body(response);
     }
 
 }

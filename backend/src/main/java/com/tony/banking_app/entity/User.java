@@ -4,9 +4,11 @@ import java.util.List;
 
 import com.tony.banking_app.entity.enums.UserRole;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,7 +28,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role; // can be CUSTOMER or ADMIN
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
     private List<Account> accounts;
 
 

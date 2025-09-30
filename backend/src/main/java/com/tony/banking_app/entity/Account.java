@@ -5,9 +5,11 @@ import java.util.List;
 import com.tony.banking_app.entity.enums.AccountStatus;
 import com.tony.banking_app.entity.enums.AccountType;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,6 +27,7 @@ public class Account {
 
     @ManyToOne
     @JoinColumn(name="user_id")
+    // @JsonIgnore // avoid infinite nesting if not using DTO
     private User user;
 
     private Double balance;
@@ -35,9 +38,17 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private AccountStatus status; // ACTIVE, PENDING, REJECTED
 
-    @OneToMany(mappedBy="account")
+    @OneToMany(mappedBy="account", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
     private List<Transaction> transactions;
 
+    public Account() {}
+
+    public Account(User user, Double balance, AccountType type) {
+        this.user = user;
+        this.balance = balance;
+        this.type = type;
+        this.status = AccountStatus.ACTIVE; // default status set to ACTIVE for now
+    }
 
     /*
      * GETTERS / SETTERS

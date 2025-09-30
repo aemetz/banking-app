@@ -25,5 +25,37 @@ public class GlobalExceptionHandler {
             .status(HttpStatus.BAD_REQUEST)
             .body(body);
     }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleRoleException(UsernameNotFoundException ex) {
+        Map<String, String> body = Map.of("error", ex.getMessage());
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(body);
+    }
+
+    @ExceptionHandler(AccountNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleAccountNotFoundException(AccountNotFoundException ex) {
+        Map<String, String> body = Map.of("error", ex.getMessage());
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(body);
+    }
+
+    @ExceptionHandler(InvalidAccountException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidAccountException(InvalidAccountException ex) {
+        Map<String, String> body = Map.of("error", ex.getMessage());
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(body);
+    }
+
+    @ExceptionHandler(InvalidTransactionException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidAccountException(InvalidTransactionException ex) {
+        Map<String, String> body = Map.of("error", ex.getMessage());
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(body);
+    }
     
 }

@@ -37,6 +37,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
                 // Role-based endpoints
                 .requestMatchers("/api/customers/**").hasAuthority("CUSTOMER")
+                .requestMatchers("/api/accounts/**").hasAuthority("CUSTOMER")
+                .requestMatchers("/api/transactions/**").hasAuthority("CUSTOMER")
                 .requestMatchers("/api/admins/**").hasAuthority("ADMIN")
                 // Other endpoints require authentication
                 .anyRequest().authenticated()

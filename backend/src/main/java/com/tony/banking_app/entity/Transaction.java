@@ -21,7 +21,8 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(name="account_id")
-    private Account account; // source
+    // @JsonIgnore // avoid infinite nesting if not using DTO
+    private Account account;
 
     @Enumerated(EnumType.STRING)
     private TransactionType type; // TRANSFER, DEPOSIT, WITHDRAWAL
@@ -32,6 +33,25 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name="related_account_id", nullable=true)
     private Account relatedAccount; // only used for TRANSFER transaction type
+
+
+    public Transaction() {}
+
+    public Transaction(Account account, TransactionType type, Double amount, LocalDateTime timestamp) {
+        this.account = account;
+        this.type = type;
+        this.amount = amount;
+        this.timestamp = timestamp;
+    }
+
+    public Transaction(Account account, TransactionType type, Double amount, LocalDateTime timestamp, Account relatedAccount) {
+        this.account = account;
+        this.type = type;
+        this.amount = amount;
+        this.timestamp = timestamp;
+        this.relatedAccount = relatedAccount;
+    }
+
 
     /*
      * GETTERS / SETTERS
