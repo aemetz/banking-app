@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,8 +32,7 @@ public class AccountController {
      */
     @GetMapping
     public ResponseEntity<List<AccountResponse>> getAccounts() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<AccountResponse> accounts = accountService.getAllAccountsByUsername(username);
+        List<AccountResponse> accounts = accountService.getAllAccountsByUsername();
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(accounts);
@@ -46,10 +44,8 @@ public class AccountController {
      * @return A response entity containing the persisted account
      */
     @PostMapping
-    public ResponseEntity<AccountResponse> createAccount(@RequestBody CreateAccountRequest request) { // @RequestBody AccountStatus status (?)
-        // initial balance 0, status active, type (get from request body), user_id look up based on username
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        AccountResponse newAccount = accountService.createAccount(username, request.getType());
+    public ResponseEntity<AccountResponse> createAccount(@RequestBody CreateAccountRequest request) {
+        AccountResponse newAccount = accountService.createAccount(request);
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(newAccount);

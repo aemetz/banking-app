@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.tony.banking_app.dto.AccountResponse;
+import com.tony.banking_app.dto.CreateAccountRequest;
 import com.tony.banking_app.entity.Account;
 import com.tony.banking_app.entity.User;
 import com.tony.banking_app.entity.enums.AccountType;
@@ -32,12 +34,16 @@ public class AccountService {
      * @return List of accounts associated with the user
      * @throws UsernameNotFoundException
      */
-    public List<AccountResponse> getAllAccountsByUsername(String username) throws UsernameNotFoundException {
+    public List<AccountResponse> getAllAccountsByUsername() throws UsernameNotFoundException {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
         List<Account> accounts = user.getAccounts();
         List<AccountResponse> newAccounts = accounts.stream()
-            .map(account -> new AccountResponse(account.getId(), account.getBalance(), account.getType(), account.getStatus()))
+            .map(account -> new AccountResponse(account.getId(), 
+                                                account.getBalance(), 
+                                                account.getType(), 
+                                                account.getStatus()))
             .collect(Collectors.toList());
         return newAccounts;
     }
@@ -45,14 +51,15 @@ public class AccountService {
 
     /**
      * Accesses user object from DB given username, creates new account object, and saves to account repository
-     * @param username
-     * @param type
+     * @param request
      * @return the persisted account
      * @throws UsernameNotFoundException
      */
-    public AccountResponse createAccount(String username, AccountType type) throws UsernameNotFoundException {
+    public AccountResponse createAccount(CreateAccountRequest request) throws UsernameNotFoundException {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+        AccountType type = request.getType();
         Account newAccount = new Account(user, Double.valueOf(0), type);
         Account persistedAccount = accountRepository.save(newAccount);
         return new AccountResponse(persistedAccount.getId(), persistedAccount.getBalance(), persistedAccount.getType(), persistedAccount.getStatus());
