@@ -16,7 +16,7 @@ public class RegisterDTO {
         } else if (role.contains("ADMIN")) {
             this.role = UserRole.ADMIN;
         } else {
-            throw new RoleNotFoundException("Role not provided or does not exist in RegisterDTO");
+            throw new RoleNotFoundException("Role not provided or does not exist as a UserRole");
         }
     }
 

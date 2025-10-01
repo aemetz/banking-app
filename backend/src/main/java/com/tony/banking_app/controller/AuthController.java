@@ -24,6 +24,11 @@ public class AuthController {
         this.authService = authService;
     }
 
+    /**
+     * Create a new username/password, persist to the database, and return jwt
+     * @param dto
+     * @return
+     */
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterDTO dto) {
         AuthResponse response = authService.register(dto);
@@ -32,6 +37,11 @@ public class AuthController {
             .body(response);
     }
 
+    /**
+     * Log someone in using their username/password and return jwt
+     * @param authRequest
+     * @return
+     */
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthRequest authRequest) {
         AuthResponse response = authService.authenticate(authRequest);
