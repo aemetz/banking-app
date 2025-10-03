@@ -44,7 +44,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         } else {
             if (!allowedEndpoints.contains(request.getRequestURI())) {
                 // if the current reqeust URI is not for registration or login, then it requires a token.
-                throw new JwtValidationException("Header null or token not found");
+                throw new JwtValidationException("Header null or token not found; token required for this endpoint");
             }
         }
 

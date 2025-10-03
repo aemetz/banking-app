@@ -47,6 +47,8 @@ public class TransactionService {
      * @throws InvalidTransactionException if requested amount is non-positive
      */
     public TransactionResponse makeDeposit(DepositWithdrawRequest request) throws AccountNotFoundException, UsernameNotFoundException, InvalidAccountException, InvalidTransactionException {
+        System.out.println("id: " + request.getAccountId() + " | amount: " + request.getAmount());
+        
         // Ensure the requested account belongs to the current user
         Account destinationAccount = validateAccountOwnership(request.getAccountId());
 
@@ -82,6 +84,8 @@ public class TransactionService {
      * @throws InvalidTransactionException if requested amount is non-positive or higher than balance
      */
     public TransactionResponse makeWithdrawal(DepositWithdrawRequest request) throws AccountNotFoundException, UsernameNotFoundException, InvalidAccountException, InvalidTransactionException {
+        System.out.println("id: " + request.getAccountId() + " | amount: " + request.getAmount());
+        
         // Ensure the requested account belongs to the current user
         Account sourceAccount = validateAccountOwnership(request.getAccountId());
 
@@ -121,6 +125,8 @@ public class TransactionService {
      * @throws InvalidTransactionException if requested amount is non-positive, higher than balance, or goes from an account to itself
      */
     public TransactionResponse makeTransfer(TransferRequest request) throws AccountNotFoundException, UsernameNotFoundException, InvalidAccountException, InvalidTransactionException {
+        // System.out.println(request.getAccountId() + request.getAmount() + request.getRelatedAccountId());
+        
         // Validate that the current user owns the "from" account, and it is not equal to the "to" account
         Account from = validateAccountOwnership(request.getFromId());
         if (from.getId().equals(request.getToId())) {
