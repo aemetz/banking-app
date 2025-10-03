@@ -10,11 +10,6 @@ export default function Transfers() {
     const [amount, setAmount] = useState("");
     const [relatedAccountId, setRelatedAccountId] = useState<String | null>(null);
 
-
-    const depositUrl = "http://localhost:8080/api/transactions/deposit";
-    const withdrawUrl = "http://localhost:8080/api/transactions/withdraw";
-    const transferUrl = "http://localhost:8080/api/transactions/transfer";
-
     useEffect(() => {
             const getAccounts = async () => {
                 try {
@@ -110,10 +105,6 @@ export default function Transfers() {
         }
 
 
-
-
-
-
     return (
         <div className="transfer-page">
             <h1>Make A Transfer</h1>
@@ -122,7 +113,7 @@ export default function Transfers() {
 
                 <div className="deposit">
                     <h3>Deposit</h3>
-                    <form className="deposit-form" onSubmit={handleDeposit}>
+                    <form className="transfer-forms" onSubmit={handleDeposit}>
                         <label htmlFor="select-deposit-account">Select an account:</label><br />
                         <select name="account-list" id="select-deposit-account" onChange={(e) => setAccountId(e.target.value)}>
                             {
@@ -133,15 +124,15 @@ export default function Transfers() {
                         </select><br />
 
                         <label htmlFor="deposit-amount">Enter the amount to deposit:</label><br />
-                        <input type="text" name="amount" id="deposit-amount" required onChange={(e) => setAmount(e.target.value)} /><br />
+                        <input type="text" name="amount" id="deposit-amount" placeholder="$ USD" required onChange={(e) => setAmount(e.target.value)} /><br />
 
-                        <button type="submit">Submit</button>
+                        <button type="submit">Deposit</button>
                     </form>
                 </div>
                 
                 <div id="withdraw">
                     <h3>Withdrawal</h3>
-                    <form className="withdrawal-form" onSubmit={handleWithdrawal}>
+                    <form className="transfer-forms" onSubmit={handleWithdrawal}>
                         <label htmlFor="select-withdrawal-account">Select an account:</label><br />
                         <select name="account-list" id="select-withdrawal-account" onChange={(e) => setAccountId(e.target.value)}>
                             {
@@ -152,15 +143,15 @@ export default function Transfers() {
                         </select><br />
 
                         <label htmlFor="withdrawal-amount">Enter the amount to withdraw:</label><br />
-                        <input type="text" name="amount" id="withdrawal-amount" required onChange={(e) => setAmount(e.target.value)} /><br />
+                        <input type="text" name="amount" id="withdrawal-amount" placeholder="$ USD" required onChange={(e) => setAmount(e.target.value)} /><br />
 
-                        <button type="submit">Submit</button>
+                        <button type="submit">Withdraw</button>
                     </form>
                 </div>
 
                 <div id="transfer">
                     <h3>Transfer</h3>
-                    <form className="transfer-form" onSubmit={handleTransfer}>
+                    <form className="transfer-forms" onSubmit={handleTransfer}>
                         <label htmlFor="select-transfer-account">Select a source account:</label><br />
                         <select name="account-list" id="select-transfer-account" onChange={(e) => setAccountId(e.target.value)}>
                             {
@@ -175,17 +166,13 @@ export default function Transfers() {
                             onChange={(e) => setRelatedAccountId(e.target.value)} />
                         <br />
 
-                        <label htmlFor="transfer-amount">Enter the amount to trasfer:</label><br />
-                        <input type="text" name="amount" id="transfer-amount" required onChange={(e) => setAmount(e.target.value)} /><br />
+                        <label htmlFor="transfer-amount">Enter the amount to transfer:</label><br />
+                        <input type="text" name="amount" id="transfer-amount" placeholder="$ USD" required onChange={(e) => setAmount(e.target.value)} /><br />
 
-                        <button type="submit">Submit</button>
+                        <button type="submit">Transfer</button>
                     </form>
                 </div>
-
-
             </div>
-
         </div>
-        
     )
 }

@@ -15,7 +15,6 @@ import com.tony.banking_app.service.AuthService;
 
 @RestController
 @RequestMapping("/api/auth")
-// @CrossOrigin(origins = "http://localhost:3000") // temporary fix, WebConfig is better
 public class AuthController {
     
     private final AuthService authService;

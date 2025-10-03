@@ -10,6 +10,7 @@ import Transfers from './pages/Transfers';
 import PrivateRoute from './components/PrivateRoute';
 import Login from './pages/Login';
 import { AuthProvider } from './components/AuthContext';
+import TransactionsByAccount from './pages/TransactionsByAccount';
 
 function App() {
   return (
@@ -43,6 +44,13 @@ function App() {
                 <Transfers />
               </PrivateRoute>
               }
+            />
+
+            <Route path="/transactions/:accountId" element={
+              <PrivateRoute>
+                <TransactionsByAccount />
+              </PrivateRoute>
+            }
             />
 
           </Routes>

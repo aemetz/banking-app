@@ -21,6 +21,7 @@ function Navbar() {
                 <li><Link className="navbar-link" to="/transactions">Transactions</Link></li>
                 <li><Link className="navbar-link" to="/transfers">Transfers</Link></li>
                 {isAuthenticated ? <li><Link className="navbar-link" to="/login" id="logout-button" onClick={handleLogout}>Log out</Link></li> : null}
+                {isAuthenticated ? null : <li><Link className="navbar-link" to="/login" id="logout-button">Log in</Link></li>}
             </ul>
         </nav>
     )

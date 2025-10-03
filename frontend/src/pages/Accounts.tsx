@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useAuth } from "../components/AuthContext";
+import { Link } from "react-router-dom";
 
 export interface Account {
     id: number,
@@ -103,13 +104,13 @@ export default function Accounts() {
                             <li key={acc.id}>
                                 Account #{acc.id}<br/>
                                 Type: {acc.type} | Balance: ${acc.balance}
+                                <Link className="transaction-by-account-link" to={`/transactions/${acc.id}`}>View Transactions</Link>
                             </li>
                         ))
                     }
                     {/* Make each account expandable with transactions component inside? */}
                 </ul>
             </div>
-            
             
         </div>
     )
