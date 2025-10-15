@@ -9,11 +9,12 @@ export default function Transfers() {
     const [accountId, setAccountId] = useState<number | string>("");
     const [amount, setAmount] = useState("");
     const [relatedAccountId, setRelatedAccountId] = useState<String | null>(null);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
             const getAccounts = async () => {
                 try {
-                    const response = await fetch("http://localhost:8080/api/accounts", {
+                    const response = await fetch(`${apiUrl}/api/accounts`, {
                         method: "GET",
                         headers: { 
                             "Content-Type": "application/json",
@@ -47,7 +48,7 @@ export default function Transfers() {
             };
     
             getAccounts();
-        }, [logout, token]);
+        }, [logout, token, apiUrl]);
 
 
         // Helper to send request
@@ -81,7 +82,7 @@ export default function Transfers() {
         // Handlers for each transaction type
         const handleDeposit = async (e: React.FormEvent) => {
             e.preventDefault();
-            sendRequest("http://localhost:8080/api/transactions/deposit", {
+            sendRequest(`${apiUrl}/api/transactions/deposit`, {
                 accountId,
                 amount
             })
@@ -89,7 +90,7 @@ export default function Transfers() {
 
         const handleWithdrawal = async (e: React.FormEvent) => {
             e.preventDefault();
-            sendRequest("http://localhost:8080/api/transactions/withdraw", {
+            sendRequest(`${apiUrl}/api/transactions/withdraw`, {
                 accountId,
                 amount
             });
@@ -97,7 +98,7 @@ export default function Transfers() {
 
         const handleTransfer = async (e: React.FormEvent) => {
             e.preventDefault();
-            sendRequest("http://localhost:8080/api/transactions/transfer", {
+            sendRequest(`${apiUrl}/api/transactions/transfer`, {
                 fromId: accountId,
                 toId: relatedAccountId,
                 amount: amount

@@ -16,11 +16,12 @@ export default function Accounts() {
     const { logout } = useAuth();
     const { token } = useAuth();
     const [type, setType] = useState("");
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         const getAccounts = async () => {
             try {
-                const response = await fetch("http://localhost:8080/api/accounts", {
+                const response = await fetch(`${apiUrl}/api/accounts`, {
                     method: "GET",
                     headers: { 
                         "Content-Type": "application/json",
@@ -44,14 +45,14 @@ export default function Accounts() {
         };
 
         getAccounts();
-    }, [logout, token]);
+    }, [logout, token, apiUrl]);
 
 
     const handleAccountCreation = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
-            const response = await fetch("http://localhost:8080/api/accounts", {
+            const response = await fetch(`${apiUrl}/api/accounts`, {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",

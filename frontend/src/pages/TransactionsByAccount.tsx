@@ -11,13 +11,13 @@ export default function TransactionsByAccount() {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
     const { accountId } = useParams<{ accountId: string }>();
     const [error, setError] = useState<string | null>(null);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
-    console.log("SEARCHING FOR: " + accountId);
 
     useEffect(() => {
             const getTransactions = async () => {
                 try {
-                    const response = await fetch(`http://localhost:8080/api/transactions/account/${accountId}`,{
+                    const response = await fetch(`${apiUrl}/api/transactions/account/${accountId}`,{
                         method: "GET",
                         headers: {
                             "Content-Type": "application/json",
@@ -43,7 +43,7 @@ export default function TransactionsByAccount() {
                 }
             };
             getTransactions();
-    }, [accountId, logout, token])
+    }, [accountId, logout, token, apiUrl])
 
     if (error) {
         return <div><h2>{error}</h2></div>;

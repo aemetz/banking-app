@@ -8,6 +8,7 @@ export default function Login() {
     const navigate = useNavigate();
     const [endpoint, setEndpoint] = useState("");
     const { login } = useAuth();
+    const apiUrl = process.env.REACT_APP_API_URL;
 
 
     const handleLogin = async (e: React.FormEvent) => {
@@ -29,7 +30,7 @@ export default function Login() {
         }
 
         try {
-            const response = await fetch(`http://localhost:8080/api/auth/${endpoint}`, {
+            const response = await fetch(`${apiUrl}/api/auth/${endpoint}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)

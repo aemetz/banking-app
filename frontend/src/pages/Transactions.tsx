@@ -57,11 +57,12 @@ export default function Transactions() {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
     const { logout } = useAuth();
     const { token } = useAuth();
+    const apiUrl = process.env.REACT_APP_API_URL;
     
     useEffect(() => {
         const getTransactions = async () => {
             try {
-                const response = await fetch("http://localhost:8080/api/transactions",{
+                const response = await fetch(`${apiUrl}/api/transactions`,{
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -83,7 +84,7 @@ export default function Transactions() {
             }
         };
         getTransactions();
-    }, [logout, token])
+    }, [logout, token, apiUrl])
     
     
     return (
